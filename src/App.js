@@ -17,6 +17,7 @@ const calculateWinner = (squares) => {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      console.log(squares[a]);
       return squares[a];
     }
   }
@@ -33,6 +34,12 @@ const App = () => {
   ]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
+
+  const resetGame = () => {
+    setHistory([{squares: Array(9).fill(null)}]);
+    setStepNumber(0);
+    setXIsNext(true);
+  }
 
   const handleClick = (i) => {
     const tempHistory = history.slice(0, stepNumber + 1);
@@ -69,7 +76,7 @@ const App = () => {
 
   let status;
   if (winner) {
-    status = <p>Winner: {winner === "x" ? <span className="text-blue-500 font-bold">X</span> : <span className="text-red-500 font-bold">O</span>}</p>;
+    status = <p>Winner: {winner === "X" ? <span className="text-blue-500 font-bold">X</span> : <span className="text-red-500 font-bold">O</span>}</p>;
   } else {
     status = <p>Next player: {xIsNext ? <span className="text-blue-500 font-bold">X</span> : <span className="text-red-500 font-bold">O</span>}</p>;
   }
@@ -84,6 +91,7 @@ const App = () => {
           />
         </div>
         <div className="game-info">
+          <button className="text-white bg-red-500 p-2 border border-red-600 rounded mb-2" onClick={resetGame}>Reset game</button>
           <div className="mb-2">{status}</div>
           <ol>{moves}</ol>
         </div>
