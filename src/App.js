@@ -69,7 +69,11 @@ const App = () => {
       'Go to game start';
     return (
       <li key={move} className="mb-1">
-        <button className="text-white bg-blue-500 p-2 border border-blue-600 rounded" onClick={() => jumpTo(move)}>{desc}</button>
+        <button
+          className="text-white bg-blue-500 p-2 border border-blue-600 rounded"
+          onClick={() => jumpTo(move)}>
+            {desc}
+          </button>
       </li>
     );
   });
@@ -91,7 +95,11 @@ const App = () => {
           />
         </div>
         <div className="game-info">
-          <button className="text-white bg-red-500 p-2 border border-red-600 rounded mb-2" onClick={resetGame}>Reset game</button>
+          <button
+            className="text-white bg-red-500 p-2 border border-red-600 rounded mb-2"
+            onClick={resetGame}>
+              Reset game
+          </button>
           <div className="mb-2">{status}</div>
           <ol>{moves}</ol>
         </div>
