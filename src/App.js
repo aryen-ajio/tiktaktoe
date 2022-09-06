@@ -18,7 +18,6 @@ const calculateWinner = (squares) => {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      console.log(squares[a]);
       return squares[a];
     }
   }
@@ -31,7 +30,6 @@ const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
   const [chosenEmojis, setChosenEmojis] = useState({ p1: null, p2: null });
-  console.log(chosenEmojis);
   const [history, setHistory] = useState([
     {
       squares: Array(9).fill(null),
@@ -65,7 +63,7 @@ const App = () => {
     if (calculateWinner(squares) || squares[i]) {
         return;
     }
-    squares[i] = xIsNext ? "X" : "O";
+    squares[i] = xIsNext ? `${chosenEmojis.p1.emoji}` : `${chosenEmojis.p2.emoji}`;
     setHistory(prevState => [...prevState, {squares: squares}])
     setStepNumber(history.length)
     setXIsNext(xIsNext => !xIsNext);
@@ -97,9 +95,9 @@ const App = () => {
 
   let status;
   if (winner) {
-    status = <p>Winner: {winner === "X" ? <span className="text-blue-500 font-bold">X 🏆</span> : <span className="text-red-500 font-bold">O 🏆</span>}</p>;
+    status = <p>Winner: {winner === chosenEmojis.p1?.emoji ? (<span className="text-blue-500 font-bold">{chosenEmojis.p1?.emoji} 🏆</span>) : (<span className="text-red-500 font-bold">{chosenEmojis.p2?.emoji} 🏆</span>)}</p>;
   } else {
-    status = <p>Next player: {xIsNext ? <span className="text-blue-500 font-bold">X</span> : <span className="text-red-500 font-bold">O</span>}</p>;
+    status = <p>Next player: {xIsNext ? chosenEmojis.p1?.emoji : chosenEmojis.p2?.emoji}</p>;
   }
 
   return (
@@ -108,6 +106,7 @@ const App = () => {
         <div className="flex">
           <div className="game-board">
             <Board
+              chosenEmojis={chosenEmojis}
               squares={current}
               onClick={(i) => handleClick(i)}
             />
@@ -126,10 +125,10 @@ const App = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-start justify-center">
+        <div className="flex flex-col items-center justify-center gap-y-4">
           <div className="flex flex-col items-start justify-between">
-            <p>Player 1 emoji: {chosenEmojis.p1 ? `${chosenEmojis.p1.emoji}` : 'No emoji chosen'}</p>
-            <p>Player 2 emoji: {chosenEmojis.p2 ? `${chosenEmojis.p2.emoji}` : 'No emoji chosen'}</p>
+            <p><span className="text-blue-500 font-semibold">Player 1</span> emoji: {chosenEmojis.p1 ? `${chosenEmojis.p1.emoji}` : 'No emoji chosen'}</p>
+            <p><span className="text-red-500 font-semibold">Player 2</span> emoji: {chosenEmojis.p2 ? `${chosenEmojis.p2.emoji}` : 'No emoji chosen'}</p>
           </div>
           {showPicker ?
             <Picker
@@ -148,7 +147,7 @@ const App = () => {
             null
           }
           <button
-            className="text-xl text-white font-bold bg-green-600 px-8 py-4 mt-4 border border-green-700 rounded-xl"
+            className="text-xl text-white font-bold bg-green-600 px-8 py-4 border border-green-700 rounded-xl"
             onClick={() => setGameStarted(true)}>
               Start game
           </button>

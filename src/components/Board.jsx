@@ -2,11 +2,12 @@ import Square from './Square';
 
 const Board = (props) => {
 
-    const { squares, onClick } = props;
+    const { chosenEmojis, squares, onClick } = props;
 
     const renderSquare = (i) => {
         return (
             <Square
+                chosenEmojis={chosenEmojis}
                 value={squares.squares[i]}
                 onClick={() => onClick(i)}
             />

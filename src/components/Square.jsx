@@ -1,11 +1,11 @@
 const Square = (props) => {
 
-    const { value, onClick } = props;
+    const { chosenEmojis, value, onClick } = props;
 
     let classes;
     if (value === null) {
         classes = "";
-    } else if (value === "X") {
+    } else if (value === chosenEmojis.p1.emoji) {
         classes = "text-white bg-blue-500";
     } else {
         classes = "text-white bg-red-500";
