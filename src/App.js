@@ -39,7 +39,6 @@ const App = () => {
   const [xIsNext, setXIsNext] = useState(true);
 
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject.emoji);
     if (!chosenEmojis.p1) {
       setChosenEmojis({...chosenEmojis, p1: emojiObject});
     } else {
@@ -92,8 +91,6 @@ const App = () => {
       </li>
     );
   });
-
-  console.log(history.length);
 
   let status;
   if (winner) {
