@@ -93,9 +93,13 @@ const App = () => {
     );
   });
 
+  console.log(history.length);
+
   let status;
   if (winner) {
     status = <p>Winner: {winner === chosenEmojis.p1?.emoji ? (<span className="text-blue-500 font-bold">{chosenEmojis.p1?.emoji} 🏆</span>) : (<span className="text-red-500 font-bold">{chosenEmojis.p2?.emoji} 🏆</span>)}</p>;
+  } else if (history.length === 10 && !winner) {
+    status = <p>Draw!</p>;
   } else {
     status = <p>Next player: {xIsNext ? chosenEmojis.p1?.emoji : chosenEmojis.p2?.emoji}</p>;
   }
@@ -147,8 +151,10 @@ const App = () => {
             null
           }
           <button
-            className="text-xl text-white font-bold bg-green-600 px-8 py-4 border border-green-700 rounded-xl"
-            onClick={() => setGameStarted(true)}>
+            className="text-xl text-white font-bold bg-green-600 px-8 py-4 border border-green-700 rounded-xl disabled:bg-neutral-400 disabled:border-neutral-700"
+            onClick={() => setGameStarted(true)}
+            disabled={chosenEmojis.p2?.emoji ? false : true}
+          >
               Start game
           </button>
         </div>
